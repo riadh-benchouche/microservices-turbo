@@ -1,10 +1,10 @@
 import {json, urlencoded} from "body-parser";
 import express, {type Express} from "express";
 import morgan from "morgan";
-import auth from "./router/authRouter";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import postsRouter from "./router/postsRouter";
 
 export const createServer = (): Express => {
     const app = express();
@@ -15,7 +15,7 @@ export const createServer = (): Express => {
         .use(urlencoded({extended: true}))
         .use(json())
         .use(cors())
-        .use("/", auth);
+        .use("/", postsRouter);
 
     try {
         mongoose.connect(process.env.DB_URI as string).then(r =>
